@@ -1,0 +1,896 @@
+# Threads of Humanity — historical event catalog (74 events).
+# ────────────────────────────────────────────────────────────────────────
+# Each entry drives the population/migration simulator. Numbers are
+# *artistic-but-plausible* not literal historiography. Region IDs match
+# `geography.REGIONS`. Time-windows are inclusive on the start year and
+# exclusive on the end year.
+#
+# Schema
+#   id            short slug
+#   name          human-readable label (used in the UI ticker)
+#   start, end    years
+#   type          war | plague | famine | revolution | colonization |
+#                 industrialization | persecution | goldrush |
+#                 partition | natural | exploration | abolition | exodus
+#   mortality     excess-mortality multiplier in affected regions
+#                 (1.0 = baseline, 3.0 = 3× normal deaths)
+#   birth         birth-rate multiplier (0.6 = depressed)
+#   regions       [region_id, ...]   — where mortality / birth shocks land
+#   pulls         migration draws — list of
+#                   { from: <region>, to: <region>, weight: 0..1, reason: text }
+#                 weight ≈ probability mass for an emigrant in `from`
+#                 to choose `to` during the event window
+# ────────────────────────────────────────────────────────────────────────
+
+events:
+
+  # ── 1500s ──────────────────────────────────────────────────────────────
+  - id: spanish_conquest
+    name: Spanish Conquest of the Americas
+    start: 1525
+    end: 1572
+    type: colonization
+    mortality: 1.6
+    birth: 0.9
+    regions: [mex, and, cam, car]
+    pulls:
+      - { from: esp, to: mex, weight: 0.55, reason: conquistadors & settlers }
+      - { from: esp, to: and, weight: 0.30, reason: viceroyalty of Peru }
+      - { from: prt, to: bra_ne, weight: 0.45, reason: early sugar coast }
+
+  - id: columbian_exchange
+    name: Columbian Exchange Pandemics
+    start: 1525
+    end: 1620
+    type: plague
+    mortality: 4.5
+    birth: 0.7
+    regions: [mex, and, cam, car, bra_ne]
+
+  - id: reformation_wars
+    name: European Wars of Religion
+    start: 1546
+    end: 1598
+    type: war
+    mortality: 1.5
+    birth: 0.95
+    regions: [deu, fra, nld]
+    pulls:
+      - { from: nld, to: gbr, weight: 0.35, reason: Calvinist refugees }
+      - { from: fra, to: nld, weight: 0.30, reason: Huguenot escape }
+
+  - id: russian_eastward
+    name: Russian Eastward Expansion Begins
+    start: 1581
+    end: 1700
+    type: exploration
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: rus_eu, to: rus_sib, weight: 0.85, reason: Cossack vanguard }
+
+  - id: mughal_consolidation
+    name: Mughal Empire Consolidation
+    start: 1556
+    end: 1605
+    type: industrialization
+    mortality: 1.0
+    birth: 1.05
+    regions: [ind_n]
+    pulls:
+      - { from: per, to: ind_n, weight: 0.4, reason: courtiers & artisans }
+      - { from: cas, to: ind_n, weight: 0.3, reason: military aristocracy }
+
+  # ── 1600s ──────────────────────────────────────────────────────────────
+  - id: thirty_years_war
+    name: Thirty Years' War
+    start: 1618
+    end: 1648
+    type: war
+    mortality: 2.8
+    birth: 0.7
+    regions: [deu]
+    pulls:
+      - { from: deu, to: nld, weight: 0.4, reason: refuge in the Republic }
+      - { from: deu, to: sca, weight: 0.2, reason: Swedish lines }
+
+  - id: new_england_settlement
+    name: Settlement of New England
+    start: 1620
+    end: 1700
+    type: colonization
+    mortality: 1.0
+    birth: 1.1
+    regions: []
+    pulls:
+      - { from: gbr, to: usa_ne, weight: 0.55, reason: Puritan migration }
+      - { from: gbr, to: usa_ma, weight: 0.25, reason: Quaker colonies }
+
+  - id: quebec_settlement
+    name: French Settlement of New France
+    start: 1608
+    end: 1700
+    type: colonization
+    mortality: 1.0
+    birth: 1.1
+    regions: []
+    pulls:
+      - { from: fra, to: can, weight: 0.65, reason: filles du roi & habitants }
+
+  - id: english_civil_war
+    name: English Civil War
+    start: 1642
+    end: 1651
+    type: war
+    mortality: 1.6
+    birth: 0.85
+    regions: [gbr]
+
+  - id: manchu_conquest
+    name: Manchu Conquest of China
+    start: 1644
+    end: 1683
+    type: war
+    mortality: 2.4
+    birth: 0.75
+    regions: [chn_n, chn_s]
+    pulls:
+      - { from: chn_n, to: chn_s, weight: 0.35, reason: refugees south }
+      - { from: chn_s, to: twn, weight: 0.10, reason: Ming loyalists to Taiwan }
+
+  - id: atlantic_slave_trade
+    name: Atlantic Slave Trade
+    start: 1600
+    end: 1808
+    type: persecution
+    mortality: 1.6
+    birth: 0.9
+    regions: [waf, caf]
+    pulls:
+      - { from: waf, to: car, weight: 0.30, reason: forced — Caribbean plantations }
+      - { from: waf, to: bra_ne, weight: 0.35, reason: forced — Brazilian coast }
+      - { from: waf, to: usa_se, weight: 0.20, reason: forced — Southern colonies }
+      - { from: caf, to: bra_ne, weight: 0.15, reason: forced — Bahia }
+
+  - id: great_plague_london
+    name: Great Plague of London
+    start: 1665
+    end: 1666
+    type: plague
+    mortality: 3.5
+    birth: 0.7
+    regions: [gbr]
+
+  - id: dutch_golden_age
+    name: Dutch Golden Age
+    start: 1620
+    end: 1700
+    type: industrialization
+    mortality: 0.9
+    birth: 1.05
+    regions: [nld]
+    pulls:
+      - { from: deu, to: nld, weight: 0.25, reason: economic pull }
+      - { from: sca, to: nld, weight: 0.15, reason: VOC sailors }
+
+  # ── 1700s ──────────────────────────────────────────────────────────────
+  - id: great_northern_war
+    name: Great Northern War
+    start: 1700
+    end: 1721
+    type: war
+    mortality: 1.6
+    birth: 0.85
+    regions: [sca, rus_eu, pol]
+
+  - id: russian_baltic_pull
+    name: St Petersburg Founding & Baltic Pull
+    start: 1703
+    end: 1750
+    type: industrialization
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: deu, to: rus_eu, weight: 0.20, reason: tradesmen & officers }
+      - { from: sca, to: rus_eu, weight: 0.10, reason: Petrine modernization }
+
+  - id: highland_clearances
+    name: Highland Clearances
+    start: 1750
+    end: 1860
+    type: persecution
+    mortality: 1.1
+    birth: 0.95
+    regions: [gbr]
+    pulls:
+      - { from: gbr, to: can, weight: 0.30, reason: Scottish diaspora — Nova Scotia }
+      - { from: gbr, to: usa_se, weight: 0.20, reason: Carolinas & Appalachia }
+      - { from: gbr, to: aus, weight: 0.10, reason: assisted passage }
+
+  - id: seven_years_war
+    name: Seven Years' War
+    start: 1756
+    end: 1763
+    type: war
+    mortality: 1.4
+    birth: 0.9
+    regions: [deu, fra, gbr]
+
+  - id: volga_germans
+    name: Volga German Migration
+    start: 1763
+    end: 1800
+    type: colonization
+    mortality: 1.0
+    birth: 1.05
+    regions: []
+    pulls:
+      - { from: deu, to: rus_eu, weight: 0.10, reason: Catherine's manifesto }
+      - { from: deu, to: ukr, weight: 0.08, reason: Black Sea steppe }
+
+  - id: american_revolution
+    name: American Revolution
+    start: 1775
+    end: 1783
+    type: revolution
+    mortality: 1.4
+    birth: 0.9
+    regions: [usa_ne, usa_ma, usa_se]
+    pulls:
+      - { from: usa_ne, to: can, weight: 0.10, reason: Loyalist exodus }
+
+  - id: industrial_revolution_uk
+    name: First Industrial Revolution (Britain)
+    start: 1760
+    end: 1840
+    type: industrialization
+    mortality: 0.95
+    birth: 1.15
+    regions: [gbr]
+
+  - id: french_revolution
+    name: French Revolution
+    start: 1789
+    end: 1799
+    type: revolution
+    mortality: 1.6
+    birth: 0.85
+    regions: [fra]
+    pulls:
+      - { from: fra, to: gbr, weight: 0.15, reason: aristocratic émigrés }
+      - { from: fra, to: deu, weight: 0.10, reason: refuge in the Rhineland }
+
+  # ── 1800s ──────────────────────────────────────────────────────────────
+  - id: napoleonic_wars
+    name: Napoleonic Wars
+    start: 1803
+    end: 1815
+    type: war
+    mortality: 1.7
+    birth: 0.8
+    regions: [fra, deu, esp, ita, rus_eu]
+
+  - id: latin_american_independence
+    name: Latin American Independence
+    start: 1810
+    end: 1830
+    type: revolution
+    mortality: 1.5
+    birth: 0.9
+    regions: [mex, and, arg, bra_ne]
+    pulls:
+      - { from: esp, to: arg, weight: 0.15, reason: post-war professionals }
+
+  - id: russian_caucasus
+    name: Russian Conquest of the Caucasus
+    start: 1817
+    end: 1864
+    type: war
+    mortality: 1.7
+    birth: 0.85
+    regions: [bal]
+
+  - id: irish_famine
+    name: Irish Potato Famine
+    start: 1845
+    end: 1852
+    type: famine
+    mortality: 3.2
+    birth: 0.7
+    regions: [gbr]
+    pulls:
+      - { from: gbr, to: usa_ne, weight: 0.40, reason: famine emigration }
+      - { from: gbr, to: usa_ma, weight: 0.20, reason: Boston/NY arrivals }
+      - { from: gbr, to: aus, weight: 0.10, reason: assisted passage }
+
+  - id: california_gold_rush
+    name: California Gold Rush
+    start: 1848
+    end: 1855
+    type: goldrush
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: usa_ne, to: usa_w, weight: 0.30, reason: Forty-Niners }
+      - { from: usa_ma, to: usa_w, weight: 0.20, reason: Forty-Niners }
+      - { from: chn_s, to: usa_w, weight: 0.25, reason: Cantonese miners }
+      - { from: mex, to: usa_w, weight: 0.10, reason: Sonorans }
+
+  - id: australian_gold_rush
+    name: Australian Gold Rush
+    start: 1851
+    end: 1860
+    type: goldrush
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: gbr, to: aus, weight: 0.40, reason: Victoria gold }
+      - { from: chn_s, to: aus, weight: 0.20, reason: Cantonese miners }
+      - { from: deu, to: aus, weight: 0.10, reason: Hamburg ships }
+
+  - id: taiping_rebellion
+    name: Taiping Rebellion
+    start: 1850
+    end: 1864
+    type: war
+    mortality: 3.8
+    birth: 0.7
+    regions: [chn_s, chn_n]
+    pulls:
+      - { from: chn_s, to: idn, weight: 0.10, reason: peranakan diaspora }
+      - { from: chn_s, to: mly, weight: 0.10, reason: Straits settlements }
+
+  - id: us_civil_war
+    name: American Civil War
+    start: 1861
+    end: 1865
+    type: war
+    mortality: 1.9
+    birth: 0.85
+    regions: [usa_se, usa_ma]
+
+  - id: emancipation
+    name: Abolition of Slavery in the Americas
+    start: 1863
+    end: 1888
+    type: abolition
+    mortality: 1.0
+    birth: 1.05
+    regions: []
+    pulls:
+      - { from: usa_se, to: usa_mw, weight: 0.10, reason: early Great Migration seeds }
+
+  - id: german_emigration
+    name: German Emigration to the Americas
+    start: 1840
+    end: 1900
+    type: exodus
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: deu, to: usa_mw, weight: 0.45, reason: farmland & breweries }
+      - { from: deu, to: usa_ma, weight: 0.20, reason: NYC arrivals }
+      - { from: deu, to: bra_se, weight: 0.10, reason: Santa Catarina colonies }
+      - { from: deu, to: arg, weight: 0.05, reason: Patagonian colonies }
+
+  - id: italian_emigration
+    name: Italian Mass Emigration
+    start: 1870
+    end: 1914
+    type: exodus
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: ita, to: usa_ma, weight: 0.35, reason: Ellis Island arrivals }
+      - { from: ita, to: arg, weight: 0.25, reason: Buenos Aires }
+      - { from: ita, to: bra_se, weight: 0.20, reason: São Paulo coffee }
+
+  - id: russian_pogroms
+    name: Russian Pogroms & Jewish Emigration
+    start: 1881
+    end: 1914
+    type: persecution
+    mortality: 1.2
+    birth: 0.95
+    regions: [ukr, pol]
+    pulls:
+      - { from: ukr, to: usa_ma, weight: 0.40, reason: Lower East Side }
+      - { from: pol, to: usa_ma, weight: 0.30, reason: Lower East Side }
+      - { from: ukr, to: gbr, weight: 0.10, reason: East End }
+
+  - id: scramble_africa
+    name: Scramble for Africa
+    start: 1881
+    end: 1914
+    type: colonization
+    mortality: 1.5
+    birth: 0.95
+    regions: [waf, caf, eaf, saf]
+    pulls:
+      - { from: gbr, to: saf, weight: 0.10, reason: settlers & administrators }
+      - { from: fra, to: waf, weight: 0.10, reason: colonial service }
+      - { from: prt, to: caf, weight: 0.05, reason: settlers in Angola }
+
+  - id: trans_siberian
+    name: Trans-Siberian Settlement
+    start: 1891
+    end: 1914
+    type: industrialization
+    mortality: 1.0
+    birth: 1.05
+    regions: []
+    pulls:
+      - { from: rus_eu, to: rus_sib, weight: 0.45, reason: Stolypin reforms }
+      - { from: ukr, to: rus_sib, weight: 0.20, reason: Stolypin reforms }
+
+  # ── 1900s ──────────────────────────────────────────────────────────────
+  - id: russo_japanese
+    name: Russo-Japanese War
+    start: 1904
+    end: 1905
+    type: war
+    mortality: 1.4
+    birth: 0.95
+    regions: [rus_sib, jpn, kor]
+
+  - id: ww1
+    name: World War I
+    start: 1914
+    end: 1918
+    type: war
+    mortality: 2.6
+    birth: 0.65
+    regions: [deu, fra, gbr, rus_eu, ukr, pol, ita, bal, tur]
+    pulls:
+      - { from: bal, to: usa_ma, weight: 0.10, reason: pre-war emigration tail }
+
+  - id: armenian_genocide
+    name: Armenian Genocide
+    start: 1915
+    end: 1923
+    type: persecution
+    mortality: 4.0
+    birth: 0.7
+    regions: [tur]
+    pulls:
+      - { from: tur, to: lev, weight: 0.30, reason: refugees to Syria/Lebanon }
+      - { from: tur, to: fra, weight: 0.15, reason: Marseille diaspora }
+      - { from: tur, to: usa_ma, weight: 0.15, reason: New England diaspora }
+
+  - id: spanish_flu
+    name: Spanish Flu Pandemic
+    start: 1918
+    end: 1920
+    type: plague
+    mortality: 2.6
+    birth: 0.75
+    regions: [gbr, fra, deu, usa_ma, usa_mw, ind_n, ind_s, chn_n, chn_s, bra_ne]
+
+  - id: russian_civil_war
+    name: Russian Revolution & Civil War
+    start: 1917
+    end: 1922
+    type: revolution
+    mortality: 2.8
+    birth: 0.65
+    regions: [rus_eu, ukr, rus_sib]
+    pulls:
+      - { from: rus_eu, to: fra, weight: 0.20, reason: White émigrés to Paris }
+      - { from: rus_eu, to: deu, weight: 0.15, reason: Berlin émigrés }
+      - { from: rus_eu, to: chn_n, weight: 0.10, reason: Harbin & Shanghai }
+
+  - id: greek_turkish_exchange
+    name: Greek-Turkish Population Exchange
+    start: 1923
+    end: 1925
+    type: partition
+    mortality: 1.4
+    birth: 0.9
+    regions: [tur, bal]
+    pulls:
+      - { from: tur, to: bal, weight: 0.55, reason: Anatolian Greeks }
+      - { from: bal, to: tur, weight: 0.40, reason: Balkan Muslims }
+
+  - id: holodomor
+    name: Holodomor — Soviet Famine
+    start: 1932
+    end: 1933
+    type: famine
+    mortality: 3.2
+    birth: 0.6
+    regions: [ukr]
+
+  - id: great_depression
+    name: Great Depression
+    start: 1929
+    end: 1939
+    type: industrialization
+    mortality: 1.05
+    birth: 0.85
+    regions: [usa_ne, usa_ma, usa_mw, usa_se, deu, gbr]
+    pulls:
+      - { from: usa_se, to: usa_w, weight: 0.20, reason: Dust Bowl westward }
+      - { from: usa_se, to: usa_mw, weight: 0.20, reason: Great Migration of Black Americans }
+
+  - id: ww2
+    name: World War II
+    start: 1939
+    end: 1945
+    type: war
+    mortality: 3.0
+    birth: 0.65
+    regions: [deu, pol, ukr, rus_eu, fra, gbr, ita, jpn, chn_n, chn_s, kor, idn, phl]
+    pulls:
+      - { from: deu, to: gbr, weight: 0.05, reason: Kindertransport & refugees }
+      - { from: deu, to: usa_ma, weight: 0.05, reason: Jewish refugees }
+
+  - id: holocaust
+    name: The Holocaust
+    start: 1941
+    end: 1945
+    type: persecution
+    mortality: 5.0
+    birth: 0.5
+    regions: [pol, deu, ukr, bal]
+    pulls:
+      - { from: pol, to: lev, weight: 0.10, reason: Aliyah Bet }
+      - { from: deu, to: usa_ma, weight: 0.10, reason: refugees }
+
+  - id: india_partition
+    name: Partition of India
+    start: 1947
+    end: 1948
+    type: partition
+    mortality: 1.6
+    birth: 0.9
+    regions: [ind_n, pak, ben]
+    pulls:
+      - { from: pak, to: ind_n, weight: 0.45, reason: Hindu/Sikh refugees east }
+      - { from: ind_n, to: pak, weight: 0.45, reason: Muslim refugees west }
+      - { from: ind_n, to: ben, weight: 0.10, reason: Bengal partition flows }
+
+  - id: chinese_civil_war
+    name: Chinese Civil War & Founding of PRC
+    start: 1945
+    end: 1950
+    type: revolution
+    mortality: 1.8
+    birth: 0.85
+    regions: [chn_n, chn_s]
+    pulls:
+      - { from: chn_n, to: twn, weight: 0.20, reason: KMT retreat }
+      - { from: chn_s, to: twn, weight: 0.20, reason: KMT retreat }
+      - { from: chn_s, to: mly, weight: 0.05, reason: Hong Kong & SE Asia }
+
+  - id: israel_founding
+    name: Founding of Israel & Arab-Israeli Wars
+    start: 1948
+    end: 1973
+    type: partition
+    mortality: 1.4
+    birth: 0.95
+    regions: [lev]
+    pulls:
+      - { from: pol, to: lev, weight: 0.20, reason: Holocaust survivors }
+      - { from: deu, to: lev, weight: 0.10, reason: survivors }
+      - { from: mar, to: lev, weight: 0.20, reason: Mizrahi exodus }
+      - { from: per, to: lev, weight: 0.10, reason: Persian Jewry }
+      - { from: lev, to: arab, weight: 0.20, reason: Palestinian displacement }
+
+  # ── 1950-2000 ──────────────────────────────────────────────────────────
+  - id: korean_war
+    name: Korean War
+    start: 1950
+    end: 1953
+    type: war
+    mortality: 2.4
+    birth: 0.75
+    regions: [kor, chn_n]
+    pulls:
+      - { from: kor, to: jpn, weight: 0.10, reason: Zainichi flows }
+      - { from: kor, to: usa_w, weight: 0.05, reason: war brides }
+
+  - id: postwar_europe_pull
+    name: Postwar Europe Guest-Worker Pull
+    start: 1955
+    end: 1973
+    type: industrialization
+    mortality: 0.9
+    birth: 1.05
+    regions: []
+    pulls:
+      - { from: tur, to: deu, weight: 0.30, reason: Gastarbeiter }
+      - { from: ita, to: deu, weight: 0.15, reason: Gastarbeiter }
+      - { from: mar, to: fra, weight: 0.20, reason: post-colonial workers }
+      - { from: pak, to: gbr, weight: 0.15, reason: Commonwealth migration }
+      - { from: ind_n, to: gbr, weight: 0.15, reason: Commonwealth migration }
+      - { from: car, to: gbr, weight: 0.15, reason: Windrush generation }
+
+  - id: great_leap_famine
+    name: Great Leap Forward Famine
+    start: 1959
+    end: 1962
+    type: famine
+    mortality: 3.0
+    birth: 0.65
+    regions: [chn_n, chn_s]
+
+  - id: cuban_exodus
+    name: Cuban Revolution & Exodus
+    start: 1959
+    end: 1980
+    type: revolution
+    mortality: 1.1
+    birth: 0.95
+    regions: [car]
+    pulls:
+      - { from: car, to: usa_se, weight: 0.55, reason: Miami exiles }
+
+  - id: vietnam_war
+    name: Vietnam War
+    start: 1955
+    end: 1975
+    type: war
+    mortality: 2.0
+    birth: 0.85
+    regions: [vnm, tha]
+    pulls:
+      - { from: vnm, to: usa_w, weight: 0.20, reason: postwar refugees }
+      - { from: vnm, to: fra, weight: 0.10, reason: postcolonial ties }
+
+  - id: cultural_revolution
+    name: Cultural Revolution
+    start: 1966
+    end: 1976
+    type: revolution
+    mortality: 1.2
+    birth: 0.85
+    regions: [chn_n, chn_s]
+
+  - id: decolonization_africa
+    name: African Decolonization
+    start: 1957
+    end: 1980
+    type: revolution
+    mortality: 1.2
+    birth: 1.0
+    regions: [waf, eaf, caf, saf]
+    pulls:
+      - { from: waf, to: fra, weight: 0.15, reason: francophone return }
+      - { from: caf, to: fra, weight: 0.10, reason: francophone return }
+      - { from: saf, to: gbr, weight: 0.10, reason: anglophone return }
+
+  - id: bangladesh_war
+    name: Bangladesh Liberation War
+    start: 1971
+    end: 1971
+    type: war
+    mortality: 2.8
+    birth: 0.7
+    regions: [ben]
+    pulls:
+      - { from: ben, to: ind_n, weight: 0.40, reason: refugee inflow }
+
+  - id: khmer_rouge
+    name: Khmer Rouge Cambodia
+    start: 1975
+    end: 1979
+    type: persecution
+    mortality: 3.5
+    birth: 0.55
+    regions: [tha]
+    pulls:
+      - { from: tha, to: usa_w, weight: 0.10, reason: refugees }
+      - { from: tha, to: fra, weight: 0.05, reason: refugees }
+
+  - id: iranian_revolution
+    name: Iranian Revolution
+    start: 1979
+    end: 1980
+    type: revolution
+    mortality: 1.3
+    birth: 0.9
+    regions: [per]
+    pulls:
+      - { from: per, to: usa_w, weight: 0.30, reason: Tehrangeles }
+      - { from: per, to: gbr, weight: 0.10, reason: London diaspora }
+
+  - id: soviet_afghan
+    name: Soviet-Afghan War
+    start: 1979
+    end: 1989
+    type: war
+    mortality: 1.8
+    birth: 0.85
+    regions: [cas]
+    pulls:
+      - { from: cas, to: pak, weight: 0.40, reason: refugees to Peshawar }
+      - { from: cas, to: per, weight: 0.20, reason: refugees to Mashhad }
+
+  - id: gulf_oil_pull
+    name: Gulf Oil Boom Labour Pull
+    start: 1973
+    end: 2025
+    type: industrialization
+    mortality: 0.9
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: ind_s, to: arab, weight: 0.30, reason: construction & service }
+      - { from: pak, to: arab, weight: 0.20, reason: construction & service }
+      - { from: ben, to: arab, weight: 0.20, reason: construction & service }
+      - { from: phl, to: arab, weight: 0.15, reason: domestic workers }
+
+  - id: soviet_collapse
+    name: Fall of the Soviet Union
+    start: 1989
+    end: 1995
+    type: revolution
+    mortality: 1.3
+    birth: 0.7
+    regions: [rus_eu, ukr, rus_sib, cas, bal]
+    pulls:
+      - { from: rus_eu, to: deu, weight: 0.20, reason: Russlanddeutsche return }
+      - { from: rus_eu, to: lev, weight: 0.15, reason: Aliyah from FSU }
+      - { from: ukr, to: lev, weight: 0.10, reason: Aliyah from FSU }
+      - { from: cas, to: deu, weight: 0.05, reason: Russlanddeutsche return }
+
+  - id: yugoslav_wars
+    name: Yugoslav Wars
+    start: 1991
+    end: 2001
+    type: war
+    mortality: 1.8
+    birth: 0.85
+    regions: [bal]
+    pulls:
+      - { from: bal, to: deu, weight: 0.20, reason: war refugees }
+      - { from: bal, to: sca, weight: 0.10, reason: war refugees }
+
+  - id: rwanda_genocide
+    name: Rwandan Genocide
+    start: 1994
+    end: 1994
+    type: persecution
+    mortality: 4.5
+    birth: 0.6
+    regions: [eaf]
+    pulls:
+      - { from: eaf, to: caf, weight: 0.20, reason: cross-border camps }
+
+  - id: china_urbanization
+    name: Chinese Urbanization
+    start: 1990
+    end: 2025
+    type: industrialization
+    mortality: 0.85
+    birth: 0.9
+    regions: [chn_n, chn_s]
+
+  - id: india_growth
+    name: Indian Liberalization & Growth
+    start: 1991
+    end: 2025
+    type: industrialization
+    mortality: 0.9
+    birth: 0.95
+    regions: [ind_n, ind_s, ben]
+
+  # ── 2000-2025 ──────────────────────────────────────────────────────────
+  - id: post_911_wars
+    name: Post-9/11 Wars
+    start: 2001
+    end: 2014
+    type: war
+    mortality: 1.6
+    birth: 0.9
+    regions: [cas, lev]
+    pulls:
+      - { from: cas, to: pak, weight: 0.20, reason: continued refugee flows }
+      - { from: cas, to: deu, weight: 0.10, reason: asylum to Europe }
+
+  - id: iraq_war
+    name: Iraq War
+    start: 2003
+    end: 2011
+    type: war
+    mortality: 1.7
+    birth: 0.85
+    regions: [lev, arab]
+    pulls:
+      - { from: lev, to: sca, weight: 0.10, reason: asylum }
+      - { from: lev, to: deu, weight: 0.10, reason: asylum }
+
+  - id: latin_pull_us
+    name: Latin American Pull to the US
+    start: 1990
+    end: 2025
+    type: exodus
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: mex, to: usa_w, weight: 0.40, reason: economic migration }
+      - { from: mex, to: usa_se, weight: 0.20, reason: economic migration }
+      - { from: cam, to: usa_w, weight: 0.15, reason: economic migration }
+      - { from: cam, to: usa_se, weight: 0.10, reason: economic migration }
+
+  - id: arab_spring
+    name: Arab Spring
+    start: 2010
+    end: 2012
+    type: revolution
+    mortality: 1.4
+    birth: 0.95
+    regions: [mar, egy, lev]
+
+  - id: syria_war
+    name: Syrian Civil War
+    start: 2011
+    end: 2025
+    type: war
+    mortality: 2.4
+    birth: 0.75
+    regions: [lev]
+    pulls:
+      - { from: lev, to: tur, weight: 0.40, reason: largest refugee population }
+      - { from: lev, to: deu, weight: 0.20, reason: 2015 asylum }
+      - { from: lev, to: sca, weight: 0.10, reason: asylum }
+      - { from: lev, to: arab, weight: 0.05, reason: Jordan & regional refuge }
+
+  - id: european_migrant_crisis
+    name: European Migrant Crisis
+    start: 2015
+    end: 2017
+    type: exodus
+    mortality: 1.0
+    birth: 1.0
+    regions: []
+    pulls:
+      - { from: waf, to: ita, weight: 0.20, reason: Mediterranean route }
+      - { from: eaf, to: ita, weight: 0.15, reason: Mediterranean route }
+      - { from: cas, to: deu, weight: 0.20, reason: Balkan route }
+      - { from: lev, to: deu, weight: 0.30, reason: Balkan route }
+
+  - id: venezuela_exodus
+    name: Venezuelan Exodus
+    start: 2014
+    end: 2025
+    type: exodus
+    mortality: 1.2
+    birth: 0.95
+    regions: [and]
+    pulls:
+      - { from: and, to: arg, weight: 0.20, reason: regional asylum }
+      - { from: and, to: bra_se, weight: 0.20, reason: regional asylum }
+      - { from: and, to: usa_se, weight: 0.20, reason: Florida/Texas }
+
+  - id: covid_pandemic
+    name: COVID-19 Pandemic
+    start: 2020
+    end: 2023
+    type: plague
+    mortality: 1.6
+    birth: 0.9
+    regions: [usa_ne, usa_ma, usa_mw, usa_se, usa_w, gbr, fra, deu, ita, esp, bra_se, ind_n, chn_n]
+
+  - id: russia_ukraine
+    name: Russia-Ukraine War
+    start: 2022
+    end: 2025
+    type: war
+    mortality: 1.9
+    birth: 0.7
+    regions: [ukr, rus_eu]
+    pulls:
+      - { from: ukr, to: pol, weight: 0.40, reason: largest refugee group }
+      - { from: ukr, to: deu, weight: 0.25, reason: asylum }
+      - { from: ukr, to: car, weight: 0.05, reason: visa-friendly Latin America }
+      - { from: rus_eu, to: cas, weight: 0.10, reason: mobilization emigration }
+      - { from: rus_eu, to: tur, weight: 0.05, reason: mobilization emigration }
