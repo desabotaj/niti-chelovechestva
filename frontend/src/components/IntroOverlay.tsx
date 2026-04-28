@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTime } from '../store/useTime'
 
 const SCENES = [
@@ -20,34 +20,30 @@ const SCENES = [
 export function IntroOverlay() {
   const [scene, setScene] = useState(0)
   const [closed, setClosed] = useState(false)
+  const wheelLockRef = useRef(false)
   const setPlaying = useTime((s) => s.setPlaying)
   const setYear = useTime((s) => s.setYear)
   const setSpeed = useTime((s) => s.setSpeed)
-
-  useEffect(() => {
-    const t = window.setInterval(() => {
-      setScene((s) => {
-        if (s + 1 >= SCENES.length) {
-          window.setTimeout(() => {
-            setClosed(true)
-            setYear(1525)
-            setSpeed(6)
-            setPlaying(true)
-          }, 2400)
-          window.clearInterval(t)
-          return s
-        }
-        return s + 1
-      })
-    }, 2600)
-    return () => window.clearInterval(t)
-  }, [setPlaying, setSpeed, setYear])
 
   const dismiss = () => {
     setClosed(true)
     setYear(1525)
     setSpeed(6)
     setPlaying(true)
+  }
+
+  const moveScene = (direction: 1 | -1) => {
+    setScene((s) => Math.max(0, Math.min(SCENES.length - 1, s + direction)))
+  }
+
+  const onWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
+    if (wheelLockRef.current) return
+    if (Math.abs(e.deltaY) < 12) return
+    wheelLockRef.current = true
+    moveScene(e.deltaY > 0 ? 1 : -1)
+    window.setTimeout(() => {
+      wheelLockRef.current = false
+    }, 220)
   }
 
   if (closed) return null
@@ -60,8 +56,8 @@ export function IntroOverlay() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1 }}
-        onClick={dismiss}
-        className="absolute inset-0 z-30 grid cursor-pointer place-items-center bg-cosmos-950/60 backdrop-blur-sm"
+        onWheel={onWheel}
+        className="absolute inset-0 z-30 grid place-items-center bg-cosmos-950/60 backdrop-blur-sm"
       >
         <div className="max-w-xl px-8 text-center">
           <AnimatePresence mode="wait">
@@ -82,17 +78,27 @@ export function IntroOverlay() {
           </AnimatePresence>
           <div className="mt-8 flex justify-center gap-1.5">
             {SCENES.map((_, i) => (
-              <span
+              <button
                 key={i}
+                type="button"
+                onClick={() => setScene(i)}
+                aria-label={`Открыть слайд ${i + 1}`}
                 className={`h-1 w-8 rounded-full transition ${
                   i <= scene ? 'bg-thread-300' : 'bg-thread-300/20'
                 }`}
               />
             ))}
           </div>
-          <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-thread-300/40">
-            нажмите, чтобы войти
+          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.24em] text-thread-300/40">
+            прокрутите колесом или нажмите на полоски
           </p>
+          <button
+            type="button"
+            onClick={dismiss}
+            className="mt-5 rounded-full border border-thread-300/40 bg-thread-400/10 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.24em] text-thread-100 transition hover:bg-thread-300/30 hover:text-cosmos-950"
+          >
+            нажмите, чтобы войти
+          </button>
         </div>
       </motion.div>
     </AnimatePresence>
