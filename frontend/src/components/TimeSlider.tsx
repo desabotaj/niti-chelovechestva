@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTime } from '../store/useTime'
 import { useData } from '../store/useData'
@@ -7,6 +7,7 @@ import { eventNameRu } from '../i18n/eventsRu'
 const MAJOR_TICKS = [1525, 1600, 1700, 1800, 1900, 2000, 2025]
 
 export function TimeSlider() {
+  const [collapsed, setCollapsed] = useState(false)
   const startYear = useTime((s) => s.startYear)
   const endYear = useTime((s) => s.endYear)
   const year = useTime((s) => s.year)
@@ -36,6 +37,17 @@ export function TimeSlider() {
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
+  }, [])
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.code !== 'Tab') return
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+      e.preventDefault()
+      setCollapsed((v) => !v)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
   }, [])
 
   const progress = (year - startYear) / (endYear - startYear)
@@ -79,6 +91,22 @@ export function TimeSlider() {
       className="pointer-events-auto absolute inset-x-0 bottom-6 z-20 mx-auto flex w-[calc(100%-2rem)] max-w-[38rem] flex-col gap-2.5 sm:w-[calc(100%-4rem)]"
     >
       <div className="glass rounded-2xl px-5 py-4">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-thread-300/60">
+            таймлайн
+          </span>
+          <button
+            type="button"
+            onClick={() => setCollapsed((v) => !v)}
+            className="inline-flex items-center gap-1 rounded-full border border-thread-300/30 bg-thread-400/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-thread-100 transition hover:bg-thread-300/25 hover:text-cosmos-950"
+            aria-label={collapsed ? 'Развернуть таймлайн' : 'Свернуть таймлайн'}
+            title="Tab"
+          >
+            <span>{collapsed ? 'развернуть' : 'свернуть'}</span>
+            <span className="text-xs leading-none">{collapsed ? '▲' : '▼'}</span>
+          </button>
+        </div>
+        {!collapsed && (
         <div className="flex items-center gap-4">
           <button
             onClick={togglePlay}
@@ -155,9 +183,10 @@ export function TimeSlider() {
             </div>
           </div>
         </div>
+        )}
       </div>
 
-      {activeEvents.length > 0 && (
+      {!collapsed && activeEvents.length > 0 && (
         <div className="glass rounded-xl px-5 py-2.5">
           <div className="flex flex-wrap items-center gap-2.5 text-[12px]">
             <span className="font-mono uppercase tracking-[0.2em] text-thread-300/60">
