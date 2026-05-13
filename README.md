@@ -20,15 +20,9 @@
 
 ### Демо (GIF)
 
-Скринкаст интерфейса (~1.5 мин, без звука, уменьшенный fps и палитра — **~6–7 МБ**, удобно для GitHub). Исходный запись в высоком качестве храни **локально** (MKV не коммитим — см. `.gitignore`).
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-preview.gif" alt="Демо: Нити человечества — интерфейс" width="720" />
 </p>
-
-Файл в репозитории: [`docs/demo-preview.gif`](docs/demo-preview.gif). Пересобрать из своего MKV: [`scripts/encode-demo-gif.ps1`](scripts/encode-demo-gif.ps1).
-
-Если форк / ветка другие — замени в URL `desabotaj/niti-chelovechestva` и `main`.
 
 ### Структура репозитория
 
