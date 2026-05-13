@@ -1,0 +1,9 @@
+# Deploy: connect repo with base directory "frontend", or drag-drop "dist" after `npm run build`.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

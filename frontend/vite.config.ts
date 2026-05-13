@@ -6,6 +6,25 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true,
+    strictPort: false,
+    // ngrok / cloudflared: Host header is the public hostname, not localhost
+    allowedHosts: [
+      '.ngrok-free.app',
+      '.ngrok-free.dev',
+      '.ngrok.io',
+      '.trycloudflare.com',
+    ],
+  },
+  preview: {
+    port: 4173,
+    host: true,
+    strictPort: false,
+    allowedHosts: [
+      '.ngrok-free.app',
+      '.ngrok-free.dev',
+      '.ngrok.io',
+      '.trycloudflare.com',
+    ],
   },
   build: {
     target: 'es2022',

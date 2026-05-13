@@ -6,8 +6,11 @@
   "description": "Interactive data art — 500 years of synthetic human genealogy & migration on a 3D globe.",
   "scripts": {
     "dev": "vite",
+    "dev:lan": "vite --host 0.0.0.0 --port 5173",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "preview:lan": "vite preview --host 0.0.0.0 --port 4173",
+    "demo:lan": "npm run build && npm run preview:lan",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

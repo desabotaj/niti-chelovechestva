@@ -18,6 +18,16 @@
 Это не буквальная реконструкция истории, а *правдоподобная синтетическая модель*
 «реки человечества».
 
+### Демо-видео
+
+Скринкаст интерфейса (файл в репозитории: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). После пуша в ветку `main` плеер ниже подставляет поток с `raw.githubusercontent.com`:
+
+<video controls playsinline preload="metadata" width="100%" src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mkv">
+  Ваш браузер не показывает встроенное видео — откройте файл на GitHub или скачайте по ссылке выше.
+</video>
+
+Если в браузере нет звука/картинки (формат **MKV** поддерживается не везде), откройте [страницу файла на GitHub](https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mkv) или скачайте и воспроизведите локально (VLC и т.п.). Для универсального встроенного воспроизведения можно перекодировать в **MP4 (H.264 + AAC)** и заменить файл и ссылки.
+
 ### Структура репозитория
 
 ```
@@ -77,7 +87,7 @@ npm run dev
 - **Почему deck.gl, а не только Three.js**: батч-рендер слоев держит 100k+ дуг и 10k+ гексов при 60 FPS, при этом можно добавлять кастомный GLSL для свечения «нитей».
 - **Почему синтетическая модель, а не Census/UN**: полное покрытие 500 лет, единая гранулярность и воспроизводимость от одного seed.
 
-Подробности: `docs/`.
+Подробности: `docs/`. Публикация в интернете (Netlify / Vercel / GitHub Pages): [`docs/online-deploy.md`](docs/online-deploy.md).
 
 ---
 
@@ -97,6 +107,16 @@ visualized in a React + deck.gl frontend as a cinematic interactive globe.
 
 This is not a literal reconstruction of history, but a *plausible synthetic model*
 of the river of humanity.
+
+### Demo video
+
+Screen capture of the UI (file in repo: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). After you push to `main`, the player below streams from `raw.githubusercontent.com`:
+
+<video controls playsinline preload="metadata" width="100%" src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mkv">
+  Your browser cannot play inline video — open the file on GitHub or use the link above.
+</video>
+
+**MKV** is not supported in every browser’s `<video>` tag. If playback fails, open the [file on GitHub](https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mkv) or download and play locally (e.g. VLC). For reliable in-browser playback, re-encode to **MP4 (H.264 + AAC)** and update the filename + URLs.
 
 ### Repository layout
 
@@ -157,4 +177,4 @@ Open: http://localhost:5173.
 - **Why deck.gl over plain Three.js**: GPU-batched layers handle 100k+ arcs and 10k+ hex cells at 60 FPS, while still allowing custom GLSL for the signature thread glow.
 - **Why synthetic model instead of Census/UN data**: complete 500-year coverage, consistent granularity, and reproducibility from a single seed.
 
-See `docs/` for full methodology.
+See `docs/` for full methodology. Public deploy (Netlify / Vercel / GitHub Pages): [`docs/online-deploy.md`](docs/online-deploy.md).

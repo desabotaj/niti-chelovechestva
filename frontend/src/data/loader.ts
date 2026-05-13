@@ -6,12 +6,25 @@ import type {
   Meta,
 } from '../types'
 
-const BASE = '/data'
+/** Respects Vite `base` (e.g. GitHub Pages at /repo-name/) */
+const BASE = `${import.meta.env.BASE_URL}data`.replace(/\/{2,}/g, '/')
+
+const JSON_FETCH_HEADERS: HeadersInit = {
+  Accept: 'application/json',
+  // Ngrok free tier: without this, many requests get an HTML interstitial instead of JSON.
+  'ngrok-skip-browser-warning': '1',
+}
 
 export async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(path, { credentials: 'omit' })
+  const res = await fetch(path, { credentials: 'omit', headers: JSON_FETCH_HEADERS })
   if (!res.ok) {
     throw new Error(`Failed to fetch ${path}: ${res.status} ${res.statusText}`)
+  }
+  const ct = res.headers.get('content-type') ?? ''
+  if (ct.includes('text/html')) {
+    throw new Error(
+      `Expected JSON from ${path} but got HTML (${ct}). If using ngrok free, ensure ngrok-skip-browser-warning is sent; if missing files, run backend export so dist/data exists.`,
+    )
   }
   return res.json() as Promise<T>
 }
