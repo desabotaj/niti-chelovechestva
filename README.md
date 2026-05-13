@@ -20,13 +20,14 @@
 
 ### Демо-видео
 
-Скринкаст интерфейса (файл в репозитории: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). После пуша в ветку `main` плеер ниже подставляет поток с `raw.githubusercontent.com`:
+Скринкаст интерфейса: в репозитории **[`docs/demo-recording.mp4`](docs/demo-recording.mp4)** (веб-формат; исходник MKV: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). После пуша в `main` плеер ниже тянет файл с `raw.githubusercontent.com` (кодек **H.264** — нормально играет в браузерах):
 
-<video controls playsinline preload="metadata" width="100%" src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mkv">
-  Ваш браузер не показывает встроенное видео — откройте файл на GitHub или скачайте по ссылке выше.
+<video controls playsinline preload="metadata" width="100%">
+  <source src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mp4" type="video/mp4" />
+  Ваш браузер не показывает встроенное видео — откройте <a href="https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mp4">страницу файла на GitHub</a> или скачайте MP4.
 </video>
 
-Если в браузере нет звука/картинки (формат **MKV** поддерживается не везде), откройте [страницу файла на GitHub](https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mkv) или скачайте и воспроизведите локально (VLC и т.п.). Для универсального встроенного воспроизведения можно перекодировать в **MP4 (H.264 + AAC)** и заменить файл и ссылки.
+Если репозиторий или ветка другие — замените в URL `desabotaj/niti-chelovechestva` и `main` на свои.
 
 ### Структура репозитория
 
@@ -110,13 +111,14 @@ of the river of humanity.
 
 ### Demo video
 
-Screen capture of the UI (file in repo: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). After you push to `main`, the player below streams from `raw.githubusercontent.com`:
+Screen capture: **[`docs/demo-recording.mp4`](docs/demo-recording.mp4)** (web-friendly; source MKV: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). After you push to `main`, the player below streams from `raw.githubusercontent.com` (**H.264** — broad browser support):
 
-<video controls playsinline preload="metadata" width="100%" src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mkv">
-  Your browser cannot play inline video — open the file on GitHub or use the link above.
+<video controls playsinline preload="metadata" width="100%">
+  <source src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mp4" type="video/mp4" />
+  Your browser cannot play inline video — open the <a href="https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mp4">file on GitHub</a> or download the MP4.
 </video>
 
-**MKV** is not supported in every browser’s `<video>` tag. If playback fails, open the [file on GitHub](https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mkv) or download and play locally (e.g. VLC). For reliable in-browser playback, re-encode to **MP4 (H.264 + AAC)** and update the filename + URLs.
+If your fork uses a different owner/repo or branch, replace `desabotaj/niti-chelovechestva` and `main` in the URL.
 
 ### Repository layout
 
