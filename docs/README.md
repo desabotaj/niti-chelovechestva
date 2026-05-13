@@ -13,7 +13,7 @@
 | [`metrics.md`](./metrics.md) | Производительность, объемы данных, воспроизводимость и масштабирование |
 | [`wsl-lan-deploy.md`](./wsl-lan-deploy.md) | Демо по Wi‑Fi из WSL: preview, проброс порта Windows → WSL |
 | [`online-deploy.md`](./online-deploy.md) | Публикация в интернете: Netlify, Vercel, Cloudflare Pages, GitHub Pages |
-| [`demo-preview.gif`](./demo-preview.gif) | Скринкаст для README (~6–7 МБ) / README screen capture |
+| [`threads-ui-demo.gif`](./threads-ui-demo.gif) | Скринкаст для README (~6 МБ) / README screen capture |
 | [`../scripts/encode-demo-gif.ps1`](../scripts/encode-demo-gif.ps1) | Перекодирование своего MKV → GIF |
 
 ---
@@ -31,5 +31,5 @@ Project documentation for **Threads of Humanity**.
 | [`metrics.md`](./metrics.md) | Performance, data volume, reproducibility, and scaling |
 | [`wsl-lan-deploy.md`](./wsl-lan-deploy.md) | Wi‑Fi demo from WSL: preview, Windows → WSL port forwarding |
 | [`online-deploy.md`](./online-deploy.md) | Public web deploy: Netlify, Vercel, Cloudflare Pages, GitHub Pages |
-| [`demo-preview.gif`](./demo-preview.gif) | README screen capture (~6–7 MB) |
+| [`threads-ui-demo.gif`](./threads-ui-demo.gif) | README screen capture (~6 MB) |
 | [`../scripts/encode-demo-gif.ps1`](../scripts/encode-demo-gif.ps1) | Re-encode your MKV → GIF |

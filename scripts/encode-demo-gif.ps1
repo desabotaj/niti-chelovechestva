@@ -1,12 +1,12 @@
 # Re-encode a screen capture (MKV/MP4/…) to a GitHub-friendly GIF for README.
 # Requires: pip install imageio-ffmpeg
 # Usage (repo root):
-#   .\scripts\encode-demo-gif.ps1 -InputPath "docs\2026-05-13 23-48-59.mkv"
+#   .\scripts\encode-demo-gif.ps1 -InputPath "docs\my-recording.mp4"
 
 param(
   [Parameter(Mandatory = $true)]
   [string] $InputPath,
-  [string] $OutputPath = "docs\demo-preview.gif"
+  [string] $OutputPath = "docs\threads-ui-demo.gif"
 )
 
 $ErrorActionPreference = "Stop"

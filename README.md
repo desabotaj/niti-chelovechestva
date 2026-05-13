@@ -21,7 +21,7 @@
 ### Демо (GIF)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-preview.gif" alt="Демо: Нити человечества — интерфейс" width="720" />
+  <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/threads-ui-demo.gif" alt="Демо: Нити человечества — интерфейс" width="720" />
 </p>
 
 ### Структура репозитория
@@ -109,10 +109,10 @@ of the river of humanity.
 UI screen capture (~1.5 min, muted, reduced fps and palette — **~6–7 MB**, GitHub-friendly). Keep the **lossless recording locally** (MKV is gitignored — see `.gitignore`).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-preview.gif" alt="Demo: Threads of Humanity UI" width="720" />
+  <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/threads-ui-demo.gif" alt="Demo: Threads of Humanity UI" width="720" />
 </p>
 
-In repo: [`docs/demo-preview.gif`](docs/demo-preview.gif). Rebuild from your own MKV: [`scripts/encode-demo-gif.ps1`](scripts/encode-demo-gif.ps1).
+In repo: [`docs/threads-ui-demo.gif`](docs/threads-ui-demo.gif). Rebuild from your own video: [`scripts/encode-demo-gif.ps1`](scripts/encode-demo-gif.ps1).
 
 If your fork or branch differs, replace `desabotaj/niti-chelovechestva` and `main` in the URL.
 
