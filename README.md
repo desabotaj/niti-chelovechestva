@@ -18,16 +18,17 @@
 Это не буквальная реконструкция истории, а *правдоподобная синтетическая модель*
 «реки человечества».
 
-### Демо-видео
+### Демо (GIF)
 
-Скринкаст интерфейса: в репозитории **[`docs/demo-recording.mp4`](docs/demo-recording.mp4)** (веб-формат; исходник MKV: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). После пуша в `main` плеер ниже тянет файл с `raw.githubusercontent.com` (кодек **H.264** — нормально играет в браузерах):
+Скринкаст интерфейса (~1.5 мин, без звука, уменьшенный fps и палитра — **~6–7 МБ**, удобно для GitHub). Исходный запись в высоком качестве храни **локально** (MKV не коммитим — см. `.gitignore`).
 
-<video controls playsinline preload="metadata" width="100%">
-  <source src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mp4" type="video/mp4" />
-  Ваш браузер не показывает встроенное видео — откройте <a href="https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mp4">страницу файла на GitHub</a> или скачайте MP4.
-</video>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-preview.gif" alt="Демо: Нити человечества — интерфейс" width="720" />
+</p>
 
-Если репозиторий или ветка другие — замените в URL `desabotaj/niti-chelovechestva` и `main` на свои.
+Файл в репозитории: [`docs/demo-preview.gif`](docs/demo-preview.gif). Пересобрать из своего MKV: [`scripts/encode-demo-gif.ps1`](scripts/encode-demo-gif.ps1).
+
+Если форк / ветка другие — замени в URL `desabotaj/niti-chelovechestva` и `main`.
 
 ### Структура репозитория
 
@@ -109,16 +110,17 @@ visualized in a React + deck.gl frontend as a cinematic interactive globe.
 This is not a literal reconstruction of history, but a *plausible synthetic model*
 of the river of humanity.
 
-### Demo video
+### Demo (GIF)
 
-Screen capture: **[`docs/demo-recording.mp4`](docs/demo-recording.mp4)** (web-friendly; source MKV: [`docs/demo-recording.mkv`](docs/demo-recording.mkv)). After you push to `main`, the player below streams from `raw.githubusercontent.com` (**H.264** — broad browser support):
+UI screen capture (~1.5 min, muted, reduced fps and palette — **~6–7 MB**, GitHub-friendly). Keep the **lossless recording locally** (MKV is gitignored — see `.gitignore`).
 
-<video controls playsinline preload="metadata" width="100%">
-  <source src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-recording.mp4" type="video/mp4" />
-  Your browser cannot play inline video — open the <a href="https://github.com/desabotaj/niti-chelovechestva/blob/main/docs/demo-recording.mp4">file on GitHub</a> or download the MP4.
-</video>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/demo-preview.gif" alt="Demo: Threads of Humanity UI" width="720" />
+</p>
 
-If your fork uses a different owner/repo or branch, replace `desabotaj/niti-chelovechestva` and `main` in the URL.
+In repo: [`docs/demo-preview.gif`](docs/demo-preview.gif). Rebuild from your own MKV: [`scripts/encode-demo-gif.ps1`](scripts/encode-demo-gif.ps1).
+
+If your fork or branch differs, replace `desabotaj/niti-chelovechestva` and `main` in the URL.
 
 ### Repository layout
 

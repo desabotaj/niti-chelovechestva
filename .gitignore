@@ -26,6 +26,9 @@ frontend/public/data/*.bin
 frontend/public/data/*.parquet
 !frontend/public/data/.gitkeep
 
+# Heavy screen captures in docs — keep GIF preview (e.g. demo-preview.gif) in git instead
+docs/**/*.mkv
+
 # Node
 node_modules/
 dist/
