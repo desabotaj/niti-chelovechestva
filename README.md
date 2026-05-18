@@ -2,7 +2,7 @@
 
 ## RU
 
-Интерактивный data-art проект для выпускной квалификационной работы.
+Интерактивный data-art проект для работы в рамках обучения в университете.
 500 лет синтетической генеалогии и миграций человечества визуализированы
 как светящиеся нити на 3D-глобусе.
 
@@ -83,8 +83,6 @@ npm run dev
 - **Почему deck.gl, а не только Three.js**: батч-рендер слоев держит 100k+ дуг и 10k+ гексов при 60 FPS, при этом можно добавлять кастомный GLSL для свечения «нитей».
 - **Почему синтетическая модель, а не Census/UN**: полное покрытие 500 лет, единая гранулярность и воспроизводимость от одного seed.
 
-Подробности: `docs/`. Публикация в интернете (Netlify / Vercel / GitHub Pages): [`docs/online-deploy.md`](docs/online-deploy.md).
-
 ---
 
 ## EN
@@ -106,15 +104,11 @@ of the river of humanity.
 
 ### Demo (GIF)
 
-UI screen capture (~1.5 min, muted, reduced fps and palette — **~6–7 MB**, GitHub-friendly). Keep the **lossless recording locally** (MKV is gitignored — see `.gitignore`).
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/desabotaj/niti-chelovechestva/main/docs/threads-ui-demo.gif" alt="Demo: Threads of Humanity UI" width="720" />
 </p>
 
 In repo: [`docs/threads-ui-demo.gif`](docs/threads-ui-demo.gif). Rebuild from your own video: [`scripts/encode-demo-gif.ps1`](scripts/encode-demo-gif.ps1).
-
-If your fork or branch differs, replace `desabotaj/niti-chelovechestva` and `main` in the URL.
 
 ### Repository layout
 
@@ -174,5 +168,3 @@ Open: http://localhost:5173.
 - **Why H3 aggregation**: deck.gl `H3HexagonLayer` is GPU-friendly and works reliably on `GlobeView`.
 - **Why deck.gl over plain Three.js**: GPU-batched layers handle 100k+ arcs and 10k+ hex cells at 60 FPS, while still allowing custom GLSL for the signature thread glow.
 - **Why synthetic model instead of Census/UN data**: complete 500-year coverage, consistent granularity, and reproducibility from a single seed.
-
-See `docs/` for full methodology. Public deploy (Netlify / Vercel / GitHub Pages): [`docs/online-deploy.md`](docs/online-deploy.md).
